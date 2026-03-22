@@ -26,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
@@ -129,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
     private void startAutoLogin() {
         showProgress(true);
         disableButtons();
+        // 🔹 Auto login: save encrypted password is optional, you can skip if unknown
         checkRoleAndGo(mAuth.getCurrentUser());
     }
 
@@ -146,48 +146,37 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         btnLogin.setOnClickListener(v -> performLogin());
-
         btnRegister.setOnClickListener(v -> performRegistration());
-
         tvForgotPassword.setOnClickListener(v -> performForgotPassword());
 
         ivTogglePassword.setOnClickListener(v -> {
-
             if (isPasswordVisible) {
-                // Hide password
                 etPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 ivTogglePassword.setImageResource(android.R.drawable.ic_menu_view);
                 isPasswordVisible = false;
             } else {
-                // Show password
                 etPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 ivTogglePassword.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
                 isPasswordVisible = true;
             }
-
-            // Cursor end la thevnyasathi
             etPassword.setSelection(etPassword.getText().length());
         });
     }
 
     private void performLogin() {
-
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // 1. Empty check
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Enter Email and Password", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 2. Email format check
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "❌ Invalid Email Format", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // 3. Network check
         if (!isNetworkAvailable()) {
             Toast.makeText(this, "🌐 Internet connection nahi aahe.", Toast.LENGTH_SHORT).show();
             return;
@@ -196,49 +185,29 @@ public class LoginActivity extends AppCompatActivity {
         showProgress(true);
         disableButtons();
 
-        // 4. Direct login
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-
                     showProgress(false);
                     enableButtons();
 
                     if (task.isSuccessful()) {
-
+                        // 🔹 Encrypt password for saving login info
+                        String encryptedPassword = encryptPassword(password);
+                        saveLoginInfo(encryptedPassword); // ✅ Pass encrypted password
                         checkRoleAndGo(mAuth.getCurrentUser());
-
                     } else {
-
                         Exception e = task.getException();
-
-                        // 🔥 IMPORTANT FIX
                         if (e != null && e.getMessage() != null) {
-
                             String error = e.getMessage().toLowerCase();
-
                             if (error.contains("no user record") || error.contains("user not found")) {
-
-                                Toast.makeText(this,
-                                        "❌ Email register nahi aahe.",
-                                        Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(this, "❌ Email register nahi aahe.", Toast.LENGTH_LONG).show();
                             } else if (error.contains("password is invalid")) {
-
-                                Toast.makeText(this,
-                                        "❌ Password chukicha aahe.",
-                                        Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(this, "❌ Password chukicha aahe.", Toast.LENGTH_LONG).show();
                             } else {
-
-                                Toast.makeText(this,
-                                        "❌ Email kiwa Password chukicha aahe.",
-                                        Toast.LENGTH_LONG).show();
+                                Toast.makeText(this, "❌ Email kiwa Password chukicha aahe.", Toast.LENGTH_LONG).show();
                             }
-
                         } else {
-                            Toast.makeText(this,
-                                    "❌ Login Failed",
-                                    Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "❌ Login Failed", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -264,12 +233,31 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        checkRoleAndGo(mAuth.getCurrentUser());
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                            String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
+                            String encryptedPassword = encryptPassword(password);
+
+                            LoginInfo info = new LoginInfo(deviceId, timestamp, user.getUid(), encryptedPassword);
+
+                            FirebaseDatabase.getInstance().getReference("login_info")
+                                    .child(user.getUid())
+                                    .setValue(info)
+                                    .addOnCompleteListener(dbTask -> {
+                                        showProgress(false);
+                                        enableButtons();
+                                        if (dbTask.isSuccessful()) {
+                                            checkRoleAndGo(user);
+                                        } else {
+                                            Toast.makeText(this, "Database error: " + dbTask.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
                     } else {
                         showProgress(false);
                         enableButtons();
-                        String errorMessage = task.getException() != null ? 
-                                task.getException().getMessage() : "Registration Failed";
+                        String errorMessage = task.getException() != null ? task.getException().getMessage() : "Registration Failed";
                         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -297,11 +285,9 @@ public class LoginActivity extends AppCompatActivity {
                     showProgress(false);
                     enableButtons();
                     if (task.isSuccessful()) {
-                        Toast.makeText(this,
-                                "If this email is registered, a reset link has been sent.",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "If this email is registered, a reset link has been sent.", Toast.LENGTH_LONG).show();
                     } else {
-                        String errorMessage = task.getException() != null ? 
+                        String errorMessage = task.getException() != null ?
                                 task.getException().getMessage() : "Unable to process request";
                         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
                     }
@@ -326,8 +312,6 @@ public class LoginActivity extends AppCompatActivity {
                         String role = roleTask.getResult().getValue(String.class);
                         boolean isAdmin = "admin".equals(role);
 
-                        saveLoginInfo();
-
                         showProgress(false);
                         enableButtons();
 
@@ -340,14 +324,14 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         showProgress(false);
                         enableButtons();
-                        String errorMessage = roleTask.getException() != null ? 
+                        String errorMessage = roleTask.getException() != null ?
                                 roleTask.getException().getMessage() : "Unable to get role";
                         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void saveLoginInfo() {
+    private void saveLoginInfo(String encryptedPassword) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) return;
 
@@ -355,7 +339,7 @@ public class LoginActivity extends AppCompatActivity {
         String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
         String uid = currentUser.getUid();
 
-        LoginInfo info = new LoginInfo(deviceId, timestamp, uid);
+        LoginInfo info = new LoginInfo(deviceId, timestamp, uid, encryptedPassword);
 
         FirebaseDatabase.getInstance().getReference("login_info")
                 .child(uid)
@@ -391,18 +375,38 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // 🔹 Password encryption method
+    private String encryptPassword(String password) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 🔹 LoginInfo class
     public static class LoginInfo {
         public String deviceId;
         public String timestamp;
         public String uid;
+        public String encryptedPassword;
 
-        public LoginInfo() {
-        }
+        public LoginInfo() {}
 
-        public LoginInfo(String deviceId, String timestamp, String uid) {
+        public LoginInfo(String deviceId, String timestamp, String uid, String encryptedPassword) {
             this.deviceId = deviceId;
             this.timestamp = timestamp;
             this.uid = uid;
+            this.encryptedPassword = encryptedPassword;
         }
     }
 }

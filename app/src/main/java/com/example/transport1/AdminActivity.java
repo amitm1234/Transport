@@ -14,73 +14,93 @@ import com.google.firebase.database.*;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import android.content.Intent; // ✅ ADD
 
 public class AdminActivity extends AppCompatActivity {
 
-	ListView listView;
-	ArrayList<String> userList;
-	DatabaseReference databaseReference;
+    ListView listView;
+    ArrayList<String> userList;
+    ArrayList<String> userUidList; // ✅ FIX
+    DatabaseReference databaseReference;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_admin);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin);
 
-		// 🔐 Check Login
-		if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-			finish();
-			return;
-		}
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            finish();
+            return;
+        }
 
-		String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-		// 🔐 Check Admin Permission
-		DatabaseReference checkAdmin = FirebaseDatabase.getInstance().getReference("admins").child(uid);
+        DatabaseReference checkAdmin = FirebaseDatabase.getInstance()
+                .getReference("admins").child(uid);
 
-		checkAdmin.get().addOnSuccessListener(snapshot -> {
+        checkAdmin.get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                loadUsers();
+            } else {
+                Toast.makeText(this, "Access Denied!", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+    }
 
-			if (snapshot.exists()) {
-				// ✅ User is Admin → Load Users
-				loadUsers();
-			} else {
-				Toast.makeText(this, "Access Denied!", Toast.LENGTH_LONG).show();
-				finish();
-			}
-		});
-	}
+    private void loadUsers() {
 
-	private void loadUsers() {
+        listView = findViewById(R.id.listViewUsers);
 
-		listView = findViewById(R.id.listViewUsers);
-		userList = new ArrayList<>();
+        userList = new ArrayList<>();
+        userUidList = new ArrayList<>();
 
-		databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-		databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
 
-			@Override
-			public void onDataChange(@NonNull DataSnapshot snapshot) {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-				userList.clear();
+                userList.clear();
+                userUidList.clear();
 
-				for (DataSnapshot ds : snapshot.getChildren()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
 
-					String name = ds.child("name").getValue(String.class);
-					String email = ds.child("email").getValue(String.class);
+                    String uid = ds.getKey();
+                    String name = ds.child("name").getValue(String.class);
+                    String email = ds.child("email").getValue(String.class);
 
-					if (name != null && email != null) {
-						userList.add(name + " (" + email + ")");
-					}
-				}
+                    if (name != null && email != null && uid != null) {
+                        userList.add(name + " (" + email + ")");
+                        userUidList.add(uid);
+                    }
+                }
 
-				listView.setAdapter(
-						new ArrayAdapter<>(AdminActivity.this, android.R.layout.simple_list_item_1, userList));
-			}
+                listView.setAdapter(
+                        new ArrayAdapter<>(AdminActivity.this,
+                                android.R.layout.simple_list_item_1,
+                                userList));
 
-			@Override
-			public void onCancelled(@NonNull DatabaseError error) {
-				Toast.makeText(AdminActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-			}
-		});
-	}
+                // 🔥 CLICK
+                listView.setOnItemClickListener((parent, view, position, id) -> {
+
+                    String selectedUid = userUidList.get(position);
+
+                    BaseActivity.overrideUid = selectedUid; // 🔥 MAIN LOGIC
+
+                    Toast.makeText(AdminActivity.this,
+                            "Opening User Data...",
+                            Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(AdminActivity.this, MainActivity.class));
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AdminActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

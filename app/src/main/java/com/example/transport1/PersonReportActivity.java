@@ -21,7 +21,7 @@ import com.google.firebase.database.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonReportActivity extends AppCompatActivity {
+public class PersonReportActivity extends BaseActivity {
 
     TextView txtTitle, txtTotalWeight, txtTotalSell, txtTotalPaid, txtRemaining, txtTransactionCount;
     ListView listTransactions;
@@ -71,7 +71,7 @@ public class PersonReportActivity extends AppCompatActivity {
             if (subtitle != null) subtitle.setText(personName);
         }
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = getUid();
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference("transport_data")
                 .child(uid);

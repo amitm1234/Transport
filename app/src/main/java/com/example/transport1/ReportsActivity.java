@@ -1,4 +1,4 @@
-package com.example.transport1;
+    package com.example.transport1;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ReportsActivity extends AppCompatActivity {
+public class ReportsActivity extends BaseActivity{
 
     ListView listSellPerson, listFactory;
 
@@ -50,7 +50,7 @@ public class ReportsActivity extends AppCompatActivity {
         txtGrandTotalSellRemaining = findViewById(R.id.txtGrandTotalSellRemaining);
         txtGrandTotalFactoryRemaining = findViewById(R.id.txtGrandTotalFactoryRemaining);
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = getUid();
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference("transport_data")
                 .child(uid);
