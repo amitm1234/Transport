@@ -37,17 +37,17 @@ public class ViewDataActivity extends BaseActivity {
         btnDownload = findViewById(R.id.btnDownload);
         btnOpenCalculation = findViewById(R.id.btnOpenCalculation);
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = getUid();
 
-        if (currentUser == null) {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+        if (uid == null) {
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference("transport_data")
-                .child(currentUser.getUid());
+                .child(uid);
 
         fetchAndDisplayData();
 

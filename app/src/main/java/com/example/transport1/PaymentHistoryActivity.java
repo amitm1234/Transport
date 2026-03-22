@@ -11,7 +11,7 @@ import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
-public class PaymentHistoryActivity extends AppCompatActivity {
+public class PaymentHistoryActivity extends BaseActivity {
 
     ListView listPayments;
     ArrayList<String> paymentList = new ArrayList<>();
@@ -38,7 +38,7 @@ public class PaymentHistoryActivity extends AppCompatActivity {
         personName = getIntent().getStringExtra("personName");
         factoryName = getIntent().getStringExtra("factoryName");
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = getUid();
 
         if (personName != null) {
             // Person payments

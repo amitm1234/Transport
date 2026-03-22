@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
-public class AddPaymentActivity extends AppCompatActivity {
+public class AddPaymentActivity extends BaseActivity{
 
     EditText edtAmount, edtDate;
     Button btnSave;
@@ -35,7 +35,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         personName = getIntent().getStringExtra("personName");
         factoryName = getIntent().getStringExtra("factoryName");
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = getUid();
 
         // Decide Firebase path based on what is passed
         if(factoryName != null){

@@ -24,7 +24,7 @@ import com.google.firebase.database.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FactoryReportActivity extends AppCompatActivity {
+public class FactoryReportActivity extends BaseActivity {
 
     TextView txtFactoryName, txtAdvanceRemaining, txtTotalAdvanceGiven, txtTotalUsed, txtTotalWeight,txtTransactionCount;;
     ListView listFactoryRecords;
@@ -67,7 +67,7 @@ public class FactoryReportActivity extends AppCompatActivity {
         if (factoryName != null) {
             txtFactoryName.setText(factoryName);
 
-            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            String uid = getUid();
             databaseReference = FirebaseDatabase.getInstance().getReference("transport_data").child(uid);
             advanceRef = databaseReference.child("factory_payments").child(factoryName);
 
