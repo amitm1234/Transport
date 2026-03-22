@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <!-- LEFT SIDE -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_home"
+                app:tint="#1A1C1E" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Person Report"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="#1A1C1E" />
+
+                <TextView
+                    android:id="@+id/txtPersonNameSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rahul"
+                    android:textSize="13sp"
+                    android:textColor="#64748B" />
+            </LinearLayout>
+
+            <!-- RIGHT SIDE (🔥 COUNT) -->
+            <TextView
+                android:id="@+id/txtTransactionCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(0)"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#3B82F6" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:clipToPadding="false">
+
+            <!-- Summary Card -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:strokeWidth="0dp">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:rowCount="2"
+                    android:padding="20dp">
+
+                    <!-- Total Weight -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="24dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/scale_icon"
+                            android:padding="8dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#F1F5F9"
+                            app:tint="#4CAF50" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Weight"
+                                android:textSize="12sp"
+                                android:textColor="#64748B" />
+                            <TextView
+                                android:id="@+id/txtTotalWeight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="15,400 kg"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1C1E" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Total Sell -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="24dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/add_money_icon"
+                            android:padding="8dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#F1F5F9"
+                            app:tint="#1A1C1E" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total money"
+                                android:textSize="12sp"
+                                android:textColor="#64748B" />
+                            <TextView
+                                android:id="@+id/txtTotalSell"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 15,40,000"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1C1E" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Total Paid -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/pay_money_icon"
+                            android:padding="8dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#F1F5F9"
+                            app:tint="#1A1C1E" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Paid"
+                                android:textSize="12sp"
+                                android:textColor="#64748B" />
+                            <TextView
+                                android:id="@+id/txtTotalPaid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 10,00,000"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1C1E" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Remaining Balance -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/pocket"
+                            android:padding="8dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#F1F5F9"
+                            app:tint="#059669" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Remaining Balance"
+                                android:textSize="12sp"
+                                android:textColor="#059669" />
+                            <TextView
+                                android:id="@+id/txtRemaining"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₹ 5,40,000"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:textColor="#059669" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </GridLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddPayment"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:text="Add Payment"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    app:cornerRadius="27dp"
+                    app:backgroundTint="#3B82F6"
+                    android:layout_marginEnd="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPaymentHistory"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:text="Payment History"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    app:cornerRadius="27dp"
+                    app:strokeColor="#3B82F6"
+                    android:textColor="#3B82F6" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transactions"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-bold"
+                android:textColor="#1A1C1E"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Using a vertical LinearLayout instead of ListView inside NestedScrollView to avoid scroll conflicts -->
+            <LinearLayout
+                android:id="@+id/layoutTransactionsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- This is where transactions will be added, or you can keep your ListView with fixed height -->
+                <ListView
+                    android:id="@+id/listTransactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="800dp"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="16dp"
+                    android:scrollbars="none"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

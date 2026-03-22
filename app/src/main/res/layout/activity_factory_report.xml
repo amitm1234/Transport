@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home"
+                android:layout_marginEnd="16dp"
+                app:tint="#1A1C1E" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Factory Report"
+                    android:textSize="22sp"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="#1A1C1E" />
+
+                <TextView
+                    android:id="@+id/txtFactoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Factory A"
+                    android:textSize="14sp"
+                    android:textColor="#64748B" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtTransactionCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(0)"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#3B82F6" />
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:clipToPadding="false">
+
+            <!-- Summary Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:baselineAligned="false">
+
+                    <!-- Total Advance -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#FAFAFA"
+                            android:padding="6dp"
+                            android:src="@drawable/coin"
+                            app:tint="#E4CB0A" />
+
+                        <TextView
+                            android:id="@+id/txtTotalAdvanceGiven"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹0"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1A1C1E"
+                            android:layout_marginTop="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Advance"
+                            android:textSize="9sp"
+                            android:textColor="#64748B"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <!-- Total Weight -->
+
+                    <!-- Total Used -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#F1F5F9"
+                            android:padding="6dp"
+                            android:src="@drawable/scale_icon"
+                            app:tint="#160808" />
+
+                        <TextView
+                            android:id="@+id/txtTotalWeight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="0 kg"
+                            android:textColor="#1A1C1E"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Weight"
+                            android:textColor="#64748B"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_shopping_cart"
+                            android:padding="6dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#EFF6FF"
+                            app:tint="#3B82F6" />
+
+                        <TextView
+                            android:id="@+id/txtTotalUsed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹0"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#1A1C1E"
+                            android:layout_marginTop="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Used"
+                            android:textSize="9sp"
+                            android:textColor="#64748B"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <!-- Remaining Advance -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/pocket"
+                            android:padding="6dp"
+                            android:background="@drawable/circles_background"
+                            android:backgroundTint="#F0FDF4"
+                            app:tint="#10B981" />
+
+                        <TextView
+                            android:id="@+id/txtAdvanceRemaining"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹0"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#059669"
+                            android:layout_marginTop="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Remaining"
+                            android:textSize="9sp"
+                            android:textColor="#64748B"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddAdvancePayment"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:text="Add Advance"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    app:cornerRadius="27dp"
+                    app:backgroundTint="#3B82F6"
+                    android:layout_marginEnd="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewPaymentHistory"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:text="History"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-medium"
+                    app:cornerRadius="27dp"
+                    app:strokeColor="#3B82F6"
+                    android:textColor="#3B82F6" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Factory Transactions"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-bold"
+                android:textColor="#1A1C1E"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp" />
+
+            <ListView
+                android:id="@+id/listFactoryRecords"
+                android:layout_width="match_parent"
+                android:layout_height="800dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:scrollbars="none"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
