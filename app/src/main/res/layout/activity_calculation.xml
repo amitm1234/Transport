@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<LinearLayout
+android:orientation="vertical"
+android:padding="20dp"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+<EditText
+android:id="@+id/etFromDate"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Select From Date"
+android:focusable="false"
+android:clickable="true"/>
+
+<EditText
+android:id="@+id/etToDate"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Select To Date"
+android:focusable="false"
+android:clickable="true"/>
+<!-- CheckBox -->
+<CheckBox
+android:id="@+id/checkWeight"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Show Total Weight"
+android:layout_marginBottom="15dp"/>
+
+<!-- Calculate Button -->
+<Button
+android:id="@+id/btnCalculate"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Calculate"
+android:layout_marginBottom="20dp"/>
+
+<!-- Result Section -->
+<TextView
+android:id="@+id/tvTotalVehicles"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Total Vehicles: 0"
+android:textSize="18sp"
+android:textStyle="bold"
+android:layout_marginBottom="10dp"/>
+
+<TextView
+android:id="@+id/tvTotalWeight"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Total Weight: 0"
+android:textSize="18sp"
+android:textStyle="bold"
+android:visibility="gone"/>
+
+</LinearLayout>
+
+</ScrollView>
