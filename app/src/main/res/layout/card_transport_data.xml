@@ -56,19 +56,11 @@
             android:layout_marginVertical="10dp"
             android:background="#EDF2F7" />
 
-        <!-- Factory / Weight / Date -->
-        <TextView
-            android:id="@+id/tvFactory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Factory Name"
-            android:textColor="#4A5568" />
-
+        <!-- General Info (Weight / Date) -->
         <TextView
             android:id="@+id/tvWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:text="Weight Info"
             android:textColor="#4A5568"
             android:textStyle="bold" />
@@ -84,87 +76,110 @@
             android:textSize="12sp" />
 
         <!-- Buy Section -->
-        <TextView
+        <LinearLayout
+            android:id="@+id/buySection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="BUY DETAILS"
-            android:textStyle="bold"
-            android:textColor="#1976D2" />
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/tvBuyWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buy Weight"
-            android:textColor="#4A5568" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BUY DETAILS"
+                android:textStyle="bold"
+                android:textColor="#1976D2" />
 
-        <TextView
-            android:id="@+id/tvBuyPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buy Price"
-            android:textColor="#4A5568" />
+            <TextView
+                android:id="@+id/tvFactory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Factory Name"
+                android:textColor="#4A5568" />
 
-        <TextView
-            android:id="@+id/tvBuyGST"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buy GST"
-            android:textColor="#4A5568" />
+            <TextView
+                android:id="@+id/tvBuyWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy Weight"
+                android:textColor="#4A5568" />
 
-        <TextView
-            android:id="@+id/tvBuyTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buy Total"
-            android:textColor="#4A5568"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvBuyPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy Price"
+                android:textColor="#4A5568" />
+
+            <TextView
+                android:id="@+id/tvBuyGST"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy GST"
+                android:textColor="#4A5568" />
+
+            <TextView
+                android:id="@+id/tvBuyTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy Total"
+                android:textColor="#4A5568"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <!-- Sell Section -->
-        <TextView
+        <LinearLayout
+            android:id="@+id/sellSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="SELL DETAILS"
-            android:textStyle="bold"
-            android:textColor="#D32F2F" />
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/tvSellPerson"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sell Person"
-            android:textColor="#4A5568" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SELL DETAILS"
+                android:textStyle="bold"
+                android:textColor="#D32F2F" />
 
-        <TextView
-            android:id="@+id/tvSellWeight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sell Weight"
-            android:textColor="#4A5568" />
+            <TextView
+                android:id="@+id/tvSellPerson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Sell Person"
+                android:textColor="#4A5568" />
 
-        <TextView
-            android:id="@+id/tvSellPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sell Price"
-            android:textColor="#4A5568" />
+            <TextView
+                android:id="@+id/tvSellWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sell Weight"
+                android:textColor="#4A5568" />
 
-        <TextView
-            android:id="@+id/tvSellGST"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sell GST"
-            android:textColor="#4A5568" />
+            <TextView
+                android:id="@+id/tvSellPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sell Price"
+                android:textColor="#4A5568" />
 
-        <TextView
-            android:id="@+id/tvSellTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sell Total"
-            android:textColor="#4A5568"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvSellGST"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sell GST"
+                android:textColor="#4A5568" />
+
+            <TextView
+                android:id="@+id/tvSellTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sell Total"
+                android:textColor="#4A5568"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
 

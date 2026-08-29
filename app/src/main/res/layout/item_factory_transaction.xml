@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,8 +14,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="2">
+        android:columnCount="3">
 
         <!-- Vehicle Box -->
         <LinearLayout
@@ -37,12 +37,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vehicle"
                     android:textSize="10sp"
                     android:textColor="#64748B" />
+
                 <TextView
                     android:id="@+id/txtItemVehicle"
                     android:layout_width="wrap_content"
@@ -53,6 +55,7 @@
                     android:textColor="#1A1C1E" />
             </LinearLayout>
         </LinearLayout>
+
 
         <!-- Weight Box -->
         <LinearLayout
@@ -75,12 +78,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Weight"
                     android:textSize="10sp"
                     android:textColor="#64748B" />
+
                 <TextView
                     android:id="@+id/txtItemWeight"
                     android:layout_width="wrap_content"
@@ -91,6 +96,7 @@
                     android:textColor="#1A1C1E" />
             </LinearLayout>
         </LinearLayout>
+
 
         <!-- Buy Price Box -->
         <LinearLayout
@@ -113,12 +119,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Buy Price"
                     android:textSize="10sp"
                     android:textColor="#64748B" />
+
                 <TextView
                     android:id="@+id/txtItemBuyPrice"
                     android:layout_width="wrap_content"
@@ -129,6 +137,7 @@
                     android:textColor="#1A1C1E" />
             </LinearLayout>
         </LinearLayout>
+
 
         <!-- Sell Person Box -->
         <LinearLayout
@@ -151,12 +160,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sell Person"
                     android:textSize="10sp"
                     android:textColor="#64748B" />
+
                 <TextView
                     android:id="@+id/txtItemSellPerson"
                     android:layout_width="wrap_content"
@@ -167,6 +178,89 @@
                     android:textColor="#1A1C1E" />
             </LinearLayout>
         </LinearLayout>
+
+
+        <!-- GST Box -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_item_border">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/gst_icon"
+                app:tint="#120303" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GST"
+                    android:textSize="10sp"
+                    android:textColor="#64748B" />
+
+                <TextView
+                    android:id="@+id/txtItemGST"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹ 2,700"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1C1E" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!-- Total Amount Box -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_item_border">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/coin"
+                app:tint="#E4CB0A" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Amount"
+                    android:textSize="10sp"
+                    android:textColor="#64748B" />
+
+                <TextView
+                    android:id="@+id/txtItemTotalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹ 17,700"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1C1E" />
+            </LinearLayout>
+        </LinearLayout>
+
 
         <!-- Date Box -->
         <LinearLayout
@@ -189,12 +283,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date"
                     android:textSize="10sp"
                     android:textColor="#64748B" />
+
                 <TextView
                     android:id="@+id/txtItemDate"
                     android:layout_width="wrap_content"
@@ -205,6 +301,7 @@
                     android:textColor="#1A1C1E" />
             </LinearLayout>
         </LinearLayout>
+
 
         <!-- Remaining Advance Box -->
         <LinearLayout
@@ -228,12 +325,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Remaining"
                     android:textSize="10sp"
                     android:textColor="#64748B" />
+
                 <TextView
                     android:id="@+id/txtItemRemainingAdvance"
                     android:layout_width="wrap_content"
@@ -248,3 +347,4 @@
     </GridLayout>
 
 </com.google.android.material.card.MaterialCardView>
+

@@ -195,63 +195,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Factory Section Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
-            android:layout_marginBottom="16dp"
-            app:strokeWidth="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Factory Details"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#1565C0"
-                    android:layout_marginBottom="16dp"
-                    android:drawableStart="@drawable/ic_factory"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="#1565C0" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Sugar Factory Name"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="12dp"
-                    app:boxCornerRadiusTopEnd="12dp"
-                    app:boxCornerRadiusBottomStart="12dp"
-                    app:boxCornerRadiusBottomEnd="12dp"
-                    app:boxStrokeColor="#BDBDBD"
-                    app:boxStrokeWidthFocused="1.5dp"
-                    app:hintTextColor="#757575"
-                    app:startIconDrawable="@drawable/ic_factory"
-                    app:startIconTint="#757575">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/etFactory"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:textColor="#212121"
-                        android:inputType="textCapWords"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- Buy Details Section Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardBuy"
@@ -281,11 +224,66 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="#1565C0" />
 
+                <!-- Factory Name -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sugar Factory Name"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="#BDBDBD"
+                    app:boxStrokeWidthFocused="1.5dp"
+                    app:hintTextColor="#757575"
+                    app:startIconDrawable="@drawable/ic_factory"
+                    app:startIconTint="#757575">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/etFactory"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:textColor="#212121"
+                        android:inputType="textCapWords"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Buy Weight (Only for Both mode) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilBuyWeight"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Buy Weight"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="#BDBDBD"
+                    app:boxStrokeWidthFocused="1.5dp"
+                    app:hintTextColor="#757575">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etBuyWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="#212121"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <!-- Buy Price -->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:hint="Buy Price"
                     app:boxBackgroundMode="outline"
                     app:boxCornerRadiusTopStart="12dp"
@@ -459,6 +457,7 @@
 
                 <!-- Sell Weight -->
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilSellWeight"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

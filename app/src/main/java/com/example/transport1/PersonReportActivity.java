@@ -122,13 +122,18 @@ public class PersonReportActivity extends AppCompatActivity {
                     String factory = data.child("factory").getValue(String.class);
 
                     boolean match = false;
-                    if(vehicle != null && date != null){
-                        if(personName != null && personName.equals(sellPerson) && vehicle.equals(v) && date.equals(d)){
-                            match = true;
-                        }
-                    } else {
-                        if(personName != null && personName.equals(sellPerson)){
-                            match = true;
+                    boolean validPerson = personName != null && !personName.trim().isEmpty()
+                            && sellPerson != null && !sellPerson.trim().isEmpty();
+
+                    if(validPerson){
+                        if(vehicle != null && date != null){
+                            if(personName.equals(sellPerson) && vehicle.equals(v) && date.equals(d)){
+                                match = true;
+                            }
+                        } else {
+                            if(personName.equals(sellPerson)){
+                                match = true;
+                            }
                         }
                     }
 

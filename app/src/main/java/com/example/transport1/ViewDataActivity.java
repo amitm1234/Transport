@@ -97,15 +97,17 @@ public class ViewDataActivity extends BaseActivity {
         View card = inflater.inflate(R.layout.card_transport_data, layoutData, false);
 
         TextView tvVehicle = card.findViewById(R.id.tvVehicle);
-        TextView tvFactory = card.findViewById(R.id.tvFactory);
         TextView tvDate = card.findViewById(R.id.tvDate);
         TextView tvWeight = card.findViewById(R.id.tvWeight);
 
+        LinearLayout buySection = card.findViewById(R.id.buySection);
+        TextView tvFactory = card.findViewById(R.id.tvFactory);
         TextView tvBuyWeight = card.findViewById(R.id.tvBuyWeight);
         TextView tvBuyPrice = card.findViewById(R.id.tvBuyPrice);
         TextView tvBuyGST = card.findViewById(R.id.tvBuyGST);
         TextView tvBuyTotal = card.findViewById(R.id.tvBuyTotal);
 
+        LinearLayout sellSection = card.findViewById(R.id.sellSection);
         TextView tvSellPerson = card.findViewById(R.id.tvSellPerson);
         TextView tvSellWeight = card.findViewById(R.id.tvSellWeight);
         TextView tvSellPrice = card.findViewById(R.id.tvSellPrice);
@@ -115,20 +117,30 @@ public class ViewDataActivity extends BaseActivity {
         ImageButton btnMenu = card.findViewById(R.id.btnMenu);
 
         tvVehicle.setText("Vehicle: " + data.vehicle);
-        tvFactory.setText("Factory: " + data.factory);
         tvDate.setText("Date: " + data.date);
         tvWeight.setText("Weight: " + data.weight + " " + data.measurement);
 
-        tvBuyWeight.setText("Buy Weight: " + data.buyWeight);
-        tvBuyPrice.setText("Buy Price: " + data.buyPrice);
-        tvBuyGST.setText("Buy GST: " + data.buyGST);
-        tvBuyTotal.setText("Buy Total: " + data.buyTotalAmount);
+        if (data.factory != null && !data.factory.trim().isEmpty()) {
+            buySection.setVisibility(View.VISIBLE);
+            tvFactory.setText("Factory: " + data.factory);
+            tvBuyWeight.setText("Buy Weight: " + data.buyWeight);
+            tvBuyPrice.setText("Buy Price: " + data.buyPrice);
+            tvBuyGST.setText("Buy GST: " + data.buyGST);
+            tvBuyTotal.setText("Buy Total: " + data.buyTotalAmount);
+        } else {
+            buySection.setVisibility(View.GONE);
+        }
 
-        tvSellPerson.setText("Sell Person: " + data.sellPerson);
-        tvSellWeight.setText("Sell Weight: " + data.sellWeight);
-        tvSellPrice.setText("Sell Price: " + data.sellPrice);
-        tvSellGST.setText("Sell GST: " + data.sellGST);
-        tvSellTotal.setText("Sell Total: " + data.sellTotalAmount);
+        if (data.sellPerson != null && !data.sellPerson.trim().isEmpty()) {
+            sellSection.setVisibility(View.VISIBLE);
+            tvSellPerson.setText("Sell Person: " + data.sellPerson);
+            tvSellWeight.setText("Sell Weight: " + data.sellWeight);
+            tvSellPrice.setText("Sell Price: " + data.sellPrice);
+            tvSellGST.setText("Sell GST: " + data.sellGST);
+            tvSellTotal.setText("Sell Total: " + data.sellTotalAmount);
+        } else {
+            sellSection.setVisibility(View.GONE);
+        }
 
         btnMenu.setOnClickListener(v -> {
 

@@ -105,13 +105,13 @@ public class ReportsActivity extends AppCompatActivity {
                         try { buyPrice = Double.parseDouble(buyStr); } catch (Exception e) {}
                     }
 
-                    if (person != null) {
+                    if (person != null && !person.trim().isEmpty()) {
                         if (!sellPersonList.contains(person)) sellPersonList.add(person);
                         double current = sellTotals.containsKey(person) ? sellTotals.get(person) : 0;
                         sellTotals.put(person, current + sellAmount);
                     }
 
-                    if (factory != null) {
+                    if (factory != null && !factory.trim().isEmpty()) {
                         if (!factoryList.contains(factory)) factoryList.add(factory);
                         double current = factoryTotals.containsKey(factory) ? factoryTotals.get(factory) : 0;
                         factoryTotals.put(factory, current + buyPrice);

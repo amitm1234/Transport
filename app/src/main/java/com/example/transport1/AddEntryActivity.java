@@ -22,14 +22,15 @@ import java.util.Calendar;
 public class AddEntryActivity extends AppCompatActivity {
 
     AutoCompleteTextView etVehicleNo, etFactory, etSellPerson;
-    EditText etDate, etWeight;
+    EditText etDate, etWeight, etBuyWeight, etSellWeight;
     Spinner spMeasurement;
 
     EditText etBuyPrice, etBuyGSTPercent, etBuyGST, etBuyTotal;
-    EditText etSellWeight, etSellPrice, etSellGSTPercent, etSellGST, etSellTotal;
+    EditText etSellPrice, etSellGSTPercent, etSellGST, etSellTotal;
 
     Button btnSubmit;
     MaterialCardView cardGeneral, cardBuy, cardSell;
+    com.google.android.material.textfield.TextInputLayout tilBuyWeight, tilSellWeight;
     Spinner spinnerEntryType;
 
     DatabaseReference databaseReference;
@@ -63,6 +64,10 @@ public class AddEntryActivity extends AppCompatActivity {
         cardBuy = findViewById(R.id.cardBuy);
         cardSell = findViewById(R.id.cardSell);
 
+        tilBuyWeight = findViewById(R.id.tilBuyWeight);
+        tilSellWeight = findViewById(R.id.tilSellWeight);
+
+        etBuyWeight = findViewById(R.id.etBuyWeight);
         etBuyPrice = findViewById(R.id.etBuyPrice);
         etBuyGSTPercent = findViewById(R.id.etBuyGSTPercent);
         etBuyGST = findViewById(R.id.etBuyGST);
@@ -141,7 +146,10 @@ public class AddEntryActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s,int start,int count,int after){}
             public void onTextChanged(CharSequence s,int start,int before,int count){}
             public void afterTextChanged(Editable s){
-                if(etSellWeight.getText().toString().isEmpty()){
+                if(currentEntryType == ENTRY_TYPE_BOTH) {
+                    etBuyWeight.setText(s.toString());
+                    etSellWeight.setText(s.toString());
+                } else if(currentEntryType == ENTRY_TYPE_SELL) {
                     etSellWeight.setText(s.toString());
                 }
             }
@@ -187,67 +195,121 @@ public class AddEntryActivity extends AppCompatActivity {
         cardGeneral.setVisibility(View.VISIBLE);
         cardBuy.setVisibility(entryType == ENTRY_TYPE_BUY || entryType == ENTRY_TYPE_BOTH ? View.VISIBLE : View.GONE);
         cardSell.setVisibility(entryType == ENTRY_TYPE_SELL || entryType == ENTRY_TYPE_BOTH ? View.VISIBLE : View.GONE);
+
+        int weightVisibility = (entryType == ENTRY_TYPE_BOTH) ? View.VISIBLE : View.GONE;
+        tilBuyWeight.setVisibility(weightVisibility);
+        tilSellWeight.setVisibility(weightVisibility);
     }
 
     private void calculateBuyGST(){
+
+        String weightStr = etBuyWeight.getText().toString().trim();
         String priceStr = etBuyPrice.getText().toString().trim();
         String gstStr = etBuyGSTPercent.getText().toString().trim();
-        if(!priceStr.isEmpty() && !gstStr.isEmpty()){
+
+        if(!weightStr.isEmpty() && !priceStr.isEmpty() && !gstStr.isEmpty()){
+
+            double weight = Double.parseDouble(weightStr);
             double price = Double.parseDouble(priceStr);
             double gstPercent = Double.parseDouble(gstStr);
-            double gst = price * gstPercent / 100;
+
+            // Weight × Price
+            double amount = weight * price;
+
+            // GST
+            double gst = amount * gstPercent / 100;
+
+            // Final Total
+            double total = amount + gst;
+
             etBuyGST.setText(String.format("%.2f", gst));
-            etBuyTotal.setText(String.format("%.2f", price + gst));
-        } else { etBuyGST.setText(""); etBuyTotal.setText(""); }
+            etBuyTotal.setText(String.format("%.2f", total));
+
+        } else {
+
+            etBuyGST.setText("");
+            etBuyTotal.setText("");
+        }
     }
 
     private void calculateSellGST(){
+
+        String weightStr = etSellWeight.getText().toString().trim();
         String priceStr = etSellPrice.getText().toString().trim();
         String gstStr = etSellGSTPercent.getText().toString().trim();
-        if(!priceStr.isEmpty() && !gstStr.isEmpty()){
+
+        if(!weightStr.isEmpty() && !priceStr.isEmpty() && !gstStr.isEmpty()){
+
+            double weight = Double.parseDouble(weightStr);
             double price = Double.parseDouble(priceStr);
             double gstPercent = Double.parseDouble(gstStr);
-            double gst = price * gstPercent / 100;
+
+            // Weight × Price
+            double amount = weight * price;
+
+            // GST
+            double gst = amount * gstPercent / 100;
+
+            // Final Total
+            double total = amount + gst;
+
             etSellGST.setText(String.format("%.2f", gst));
-            etSellTotal.setText(String.format("%.2f", price + gst));
-        } else { etSellGST.setText(""); etSellTotal.setText(""); }
+            etSellTotal.setText(String.format("%.2f", total));
+
+        } else {
+
+            etSellGST.setText("");
+            etSellTotal.setText("");
+        }
     }
 
     private void submitData(){
         String vehicle = etVehicleNo.getText().toString().trim();
         String date = etDate.getText().toString().trim();
-        String factory = etFactory.getText().toString().trim();
         String measurement = spMeasurement.getSelectedItem().toString();
         String weight = etWeight.getText().toString().trim();
 
-        String buyPrice = etBuyPrice.getText().toString().trim();
-        String buyGST = etBuyGST.getText().toString().trim();
-        String buyTotal = etBuyTotal.getText().toString().trim();
-        String buyGSTPercent = etBuyGSTPercent.getText().toString().trim();
+        boolean includeBuy = currentEntryType == ENTRY_TYPE_BUY || currentEntryType == ENTRY_TYPE_BOTH;
+        boolean includeSell = currentEntryType == ENTRY_TYPE_SELL || currentEntryType == ENTRY_TYPE_BOTH;
 
-        String sellPerson = etSellPerson.getText().toString().trim();
-        String sellWeight = etSellWeight.getText().toString().trim();
-        String sellPrice = etSellPrice.getText().toString().trim();
-        String sellGST = etSellGST.getText().toString().trim();
-        String sellTotal = etSellTotal.getText().toString().trim();
-        String sellGSTPercent = etSellGSTPercent.getText().toString().trim();
+        String factory = includeBuy ? etFactory.getText().toString().trim() : "";
+        String buyPrice = includeBuy ? etBuyPrice.getText().toString().trim() : "";
+        String buyGST = includeBuy ? etBuyGST.getText().toString().trim() : "";
+        String buyTotal = includeBuy ? etBuyTotal.getText().toString().trim() : "";
+        String buyGSTPercent = includeBuy ? etBuyGSTPercent.getText().toString().trim() : "";
+        String buyWeightStr;
+        if (includeBuy) {
+            buyWeightStr = (currentEntryType == ENTRY_TYPE_BOTH) ? etBuyWeight.getText().toString().trim() : weight;
+        } else {
+            buyWeightStr = "";
+        }
 
-        if(vehicle.isEmpty() || date.isEmpty() || factory.isEmpty()){
+        String sellPerson = includeSell ? etSellPerson.getText().toString().trim() : "";
+        String sellPrice = includeSell ? etSellPrice.getText().toString().trim() : "";
+        String sellGST = includeSell ? etSellGST.getText().toString().trim() : "";
+        String sellTotal = includeSell ? etSellTotal.getText().toString().trim() : "";
+        String sellGSTPercent = includeSell ? etSellGSTPercent.getText().toString().trim() : "";
+        String sellWeightStr;
+        if (includeSell) {
+            sellWeightStr = (currentEntryType == ENTRY_TYPE_BOTH) ? etSellWeight.getText().toString().trim() : weight;
+        } else {
+            sellWeightStr = "";
+        }
+
+        if(vehicle.isEmpty() || date.isEmpty()){
             Toast.makeText(this,"Please fill General section fields", Toast.LENGTH_SHORT).show();
             return;
         }
-        if((currentEntryType==ENTRY_TYPE_BUY || currentEntryType==ENTRY_TYPE_BOTH) && buyPrice.isEmpty()){
-            Toast.makeText(this,"Please fill Buy Price", Toast.LENGTH_SHORT).show();
+        if(includeBuy && (factory.isEmpty() || buyPrice.isEmpty())){
+            Toast.makeText(this,"Please fill Buy Details", Toast.LENGTH_SHORT).show();
             return;
         }
-        if((currentEntryType==ENTRY_TYPE_SELL || currentEntryType==ENTRY_TYPE_BOTH) && (sellPerson.isEmpty() || sellPrice.isEmpty())){
+        if(includeSell && (sellPerson.isEmpty() || sellPrice.isEmpty())){
             Toast.makeText(this,"Please fill Sell Details", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String id = databaseReference.push().getKey();
-        String buyWeightStr = (!weight.isEmpty()) ? weight : "";
-        String sellWeightStr = (!sellWeight.isEmpty()) ? sellWeight : weight;
 
         TransportData data = new TransportData(vehicle,date,factory,measurement,weight,
                 buyWeightStr,buyPrice,buyGST,buyTotal,buyGSTPercent,
@@ -293,6 +355,7 @@ public class AddEntryActivity extends AppCompatActivity {
                 c.get(Calendar.MONTH)+1, c.get(Calendar.YEAR)));
         etFactory.setText("");
         etWeight.setText("");
+        etBuyWeight.setText("");
 
         // Buy section
         etBuyPrice.setText(defaultBuyPrice);
