@@ -25,7 +25,7 @@ public class ViewDataActivity extends BaseActivity {
 
     private LinearLayout layoutData;
     private DatabaseReference databaseReference;
-    private Button btnDownload, btnOpenCalculation;
+    private Button btnDownloadBuy, btnDownloadSell, btnDownloadBoth, btnOpenCalculation;
     private FirebaseUser currentUser;
 
     @Override
@@ -34,7 +34,9 @@ public class ViewDataActivity extends BaseActivity {
         setContentView(R.layout.activity_view_data);
 
         layoutData = findViewById(R.id.layoutData);
-        btnDownload = findViewById(R.id.btnDownload);
+        btnDownloadBuy = findViewById(R.id.btnDownloadBuy);
+        btnDownloadSell = findViewById(R.id.btnDownloadSell);
+        btnDownloadBoth = findViewById(R.id.btnDownloadBoth);
         btnOpenCalculation = findViewById(R.id.btnOpenCalculation);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -51,9 +53,16 @@ public class ViewDataActivity extends BaseActivity {
 
         fetchAndDisplayData();
 
-        btnDownload.setOnClickListener(v -> {
-            // PDF generate functionality will be handled by separate PdfGenerator class
-            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList());
+        btnDownloadBuy.setOnClickListener(v -> {
+            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList(), PdfGenerator.REPORT_BUY);
+        });
+
+        btnDownloadSell.setOnClickListener(v -> {
+            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList(), PdfGenerator.REPORT_SELL);
+        });
+
+        btnDownloadBoth.setOnClickListener(v -> {
+            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList(), PdfGenerator.REPORT_BOTH);
         });
 
         btnOpenCalculation.setOnClickListener(v -> {

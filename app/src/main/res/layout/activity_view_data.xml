@@ -1,68 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAFC"
     android:orientation="vertical">
 
-    <!-- Header -->
+    <!-- Modern Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1976D2"
-        android:padding="16dp">
+        android:background="@color/primaryBlue"
+        android:padding="20dp"
+        android:elevation="6dp">
 
-        <TextView
+        <ImageView
+            android:id="@+id/imgHeaderIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_local_shipping"
+            app:tint="@color/white" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Transport History"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_toEndOf="@id/imgHeaderIcon"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transport History"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manage Records &amp; Reports"
+                android:textColor="#BBDEFB"
+                android:textSize="12sp" />
+        </LinearLayout>
     </RelativeLayout>
 
-    <!-- Buttons -->
-    <Button
-        android:id="@+id/btnDownload"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_margin="16dp"
-        android:backgroundTint="#2E7D32"
-        android:text="Download PDF Report"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:cornerRadius="12dp"
-        app:icon="@android:drawable/ic_menu_save"
-        android:elevation="4dp" />
-
-    <Button
-        android:id="@+id/btnOpenCalculation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go To Calculation Page"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#1976D2"
-        android:textColor="#FFFFFF"
-        android:textAllCaps="false"
-        android:elevation="4dp"
-        app:cornerRadius="12dp" />
-
-    <!-- Scrollable Transport Data -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/layoutData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp" />
+            android:padding="16dp">
 
+            <!-- PDF Export Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PDF Reports"
+                android:textColor="#475569"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white"
+                app:strokeWidth="1dp"
+                app:strokeColor="#E2E8F0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDownloadBuy"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="6dp"
+                            android:backgroundTint="#2E7D32"
+                            android:text="Buy PDF"
+                            android:textAllCaps="false"
+                            android:textSize="13sp"
+                            app:cornerRadius="12dp"
+                            app:icon="@android:drawable/ic_menu_save"
+                            app:iconSize="18dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDownloadSell"
+                            android:layout_width="0dp"
+                            android:layout_height="55dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="6dp"
+                            android:backgroundTint="#C62828"
+                            android:text="Sell PDF"
+                            android:textAllCaps="false"
+                            android:textSize="13sp"
+                            app:cornerRadius="12dp"
+                            app:icon="@android:drawable/ic_menu_save"
+                            app:iconSize="18dp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDownloadBoth"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="#455A64"
+                        android:text="Download Both PDF"
+                        android:textAllCaps="false"
+                        android:textSize="14sp"
+                        app:cornerRadius="12dp"
+                        app:icon="@android:drawable/ic_menu_save"
+                        app:iconPadding="8dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Calculation Navigation Section -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOpenCalculation"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="@color/primaryBlue"
+                android:text="Go To Calculation Page"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
+                app:elevation="4dp"
+                app:icon="@drawable/ic_shopping_cart"
+                app:iconPadding="12dp"
+                app:iconSize="24dp" />
+
+            <!-- Dynamic Data Section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Transactions"
+                    android:textColor="#1E293B"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="View All"
+                    android:textColor="@color/primaryBlue"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>
