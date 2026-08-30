@@ -337,6 +337,7 @@ public class FactoryReportActivity extends AppCompatActivity {
     // FETCH FACTORY DATA
     // ====================================================
 
+
     private void fetchFactoryData(
             String factoryName) {
 
@@ -356,29 +357,36 @@ public class FactoryReportActivity extends AppCompatActivity {
                         totalWeightSum = 0;
 
 
-                        // IMPORTANT
-                        // Remaining advance starts
-                        // from total advance
+                        // ============================================
+                        // Remaining Advance starts from Total Advance
+                        // ============================================
 
                         double runningAdvance =
                                 totalAdvance;
 
 
-                        // --------------------------------------------
+                        // ============================================
                         // Loop Transactions
-                        // --------------------------------------------
+                        // ============================================
 
                         for (DataSnapshot data :
                                 snapshot.getChildren()) {
 
 
+                            // --------------------------------------------
                             // Skip payment nodes
+                            // --------------------------------------------
+
                             if ("payments".equals(data.getKey()) ||
                                     "factory_payments".equals(data.getKey())) {
 
                                 continue;
                             }
 
+
+                            // ============================================
+                            // Factory
+                            // ============================================
 
                             String factory =
                                     data.child("factory")
@@ -405,9 +413,9 @@ public class FactoryReportActivity extends AppCompatActivity {
                             }
 
 
-                            // --------------------------------------------
-                            // Get Data
-                            // --------------------------------------------
+                            // ============================================
+                            // Get Saved Firebase Data
+                            // ============================================
 
                             String vehicle =
                                     data.child("vehicle")
@@ -430,7 +438,7 @@ public class FactoryReportActivity extends AppCompatActivity {
 
 
                             String buyTotalString =
-                                    data.child("buyTotal")
+                                    data.child("buyTotalAmount")
                                             .getValue(String.class);
 
 
@@ -444,9 +452,9 @@ public class FactoryReportActivity extends AppCompatActivity {
                                             .getValue(String.class);
 
 
-                            // --------------------------------------------
-                            // Convert Values
-                            // --------------------------------------------
+                            // ============================================
+                            // Convert Firebase Values
+                            // ============================================
 
                             double buyPrice = 0;
 
@@ -457,13 +465,18 @@ public class FactoryReportActivity extends AppCompatActivity {
                             double weightValue = 0;
 
 
+                            // --------------------------------------------
+                            // Buy Price
+                            // --------------------------------------------
+
                             try {
 
-                                if (buyPriceString != null) {
+                                if (buyPriceString != null &&
+                                        !buyPriceString.trim().isEmpty()) {
 
                                     buyPrice =
                                             Double.parseDouble(
-                                                    buyPriceString
+                                                    buyPriceString.trim()
                                             );
                                 }
 
@@ -473,13 +486,18 @@ public class FactoryReportActivity extends AppCompatActivity {
                             }
 
 
+                            // --------------------------------------------
+                            // Buy GST
+                            // --------------------------------------------
+
                             try {
 
-                                if (buyGSTString != null) {
+                                if (buyGSTString != null &&
+                                        !buyGSTString.trim().isEmpty()) {
 
                                     buyGST =
                                             Double.parseDouble(
-                                                    buyGSTString
+                                                    buyGSTString.trim()
                                             );
                                 }
 
@@ -489,13 +507,22 @@ public class FactoryReportActivity extends AppCompatActivity {
                             }
 
 
+                            // --------------------------------------------
+                            // Buy Total
+                            //
+                            // IMPORTANT:
+                            // Firebase मधून saved value घेत आहोत.
+                            // येथे कोणतीही calculation नाही.
+                            // --------------------------------------------
+
                             try {
 
-                                if (buyTotalString != null) {
+                                if (buyTotalString != null &&
+                                        !buyTotalString.trim().isEmpty()) {
 
                                     buyTotal =
                                             Double.parseDouble(
-                                                    buyTotalString
+                                                    buyTotalString.trim()
                                             );
                                 }
 
@@ -505,13 +532,18 @@ public class FactoryReportActivity extends AppCompatActivity {
                             }
 
 
+                            // --------------------------------------------
+                            // Weight
+                            // --------------------------------------------
+
                             try {
 
-                                if (weight != null) {
+                                if (weight != null &&
+                                        !weight.trim().isEmpty()) {
 
                                     weightValue =
                                             Double.parseDouble(
-                                                    weight
+                                                    weight.trim()
                                             );
                                 }
 
@@ -521,55 +553,42 @@ public class FactoryReportActivity extends AppCompatActivity {
                             }
 
 
-                            // --------------------------------------------
-                            // SAFETY:
-                            // जर Firebase मध्ये buyTotal save नसेल
-                            // तर Buy Price + GST calculate करेल
-                            // --------------------------------------------
-
-                            if (buyTotal == 0) {
-
-                                buyTotal =
-                                        buyPrice + buyGST;
-                            }
-
-
-                            // --------------------------------------------
-                            // Total Used
+                            // ============================================
+                            // IMPORTANT
                             //
-                            // येथे Total Amount वापरत आहोत
-                            // म्हणजे Buy Price + GST
-                            // --------------------------------------------
+                            // येथे buyPrice + buyGST करू नये.
+                            //
+                            // buyTotal Firebase मध्ये saved असलेली
+                            // final calculated value आहे.
+                            // ============================================
+
+
+                            // ============================================
+                            // Total Used
+                            // ============================================
 
                             totalUsedAmount += buyTotal;
 
 
-                            // --------------------------------------------
-                            // Weight
-                            // --------------------------------------------
+                            // ============================================
+                            // Total Weight
+                            // ============================================
 
                             totalWeightSum += weightValue;
 
 
-                            // --------------------------------------------
-                            // IMPORTANT
+                            // ============================================
+                            // Remaining Advance
                             //
-                            // Remaining Advance मधून
-                            // BUY TOTAL कमी करा
-                            //
-                            // आधी:
-                            // runningAdvance -= buyPrice;
-                            //
-                            // आता:
-                            // runningAdvance -= buyTotal;
-                            // --------------------------------------------
+                            // Saved Buy Total कमी करा
+                            // ============================================
 
                             runningAdvance -= buyTotal;
 
 
-                            // --------------------------------------------
+                            // ============================================
                             // Add Record
-                            // --------------------------------------------
+                            // ============================================
 
                             recordList.add(
                                     new FactoryTransactionModel(
@@ -594,12 +613,12 @@ public class FactoryReportActivity extends AppCompatActivity {
                         }
 
 
-                        // ====================================================
+                        // ============================================
                         // HEADER TOTALS
-                        // ====================================================
+                        // ============================================
 
+                        // Total Used = Firebase मधील saved buyTotal ची sum
 
-                        // Total Used = Buy Price + GST
                         txtTotalUsed.setText(
                                 String.format(
                                         "₹%,.0f",
@@ -607,6 +626,10 @@ public class FactoryReportActivity extends AppCompatActivity {
                                 )
                         );
 
+
+                        // ============================================
+                        // Total Weight
+                        // ============================================
 
                         txtTotalWeight.setText(
                                 String.format(
@@ -616,11 +639,11 @@ public class FactoryReportActivity extends AppCompatActivity {
                         );
 
 
-                        // --------------------------------------------
+                        // ============================================
                         // Final Remaining
                         //
-                        // Total Advance - Total Amount
-                        // --------------------------------------------
+                        // Total Advance - Total Saved Buy Total
+                        // ============================================
 
                         double finalRemaining =
                                 totalAdvance - totalUsedAmount;
@@ -634,9 +657,9 @@ public class FactoryReportActivity extends AppCompatActivity {
                         );
 
 
-                        // --------------------------------------------
+                        // ============================================
                         // Transaction Count
-                        // --------------------------------------------
+                        // ============================================
 
                         int count =
                                 recordList.size();
@@ -649,7 +672,10 @@ public class FactoryReportActivity extends AppCompatActivity {
                         );
 
 
+                        // ============================================
                         // Refresh List
+                        // ============================================
+
                         adapter.notifyDataSetChanged();
                     }
 
@@ -657,10 +683,14 @@ public class FactoryReportActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(
                             @NonNull DatabaseError error) {
+
+                        // Firebase error handling
                     }
                 }
         );
     }
+
+
 
 
     // ====================================================

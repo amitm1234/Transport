@@ -7,8 +7,12 @@ import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import android.content.ContentValues;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+
+import java.io.OutputStream;
 import java.util.List;
 
 public class PdfGenerator {
@@ -117,11 +121,63 @@ public class PdfGenerator {
 
             pdfDocument.finishPage(page);
 
-            File file = new File(context.getExternalFilesDir(null), PDF_FILE_NAME);
-            pdfDocument.writeTo(new FileOutputStream(file));
+            ContentValues values = new ContentValues();
+
+            values.put(
+                    MediaStore.Downloads.DISPLAY_NAME,
+                    PDF_FILE_NAME
+            );
+
+            values.put(
+                    MediaStore.Downloads.MIME_TYPE,
+                    "application/pdf"
+            );
+
+            values.put(
+                    MediaStore.Downloads.RELATIVE_PATH,
+                    Environment.DIRECTORY_DOWNLOADS + "/Transport/"
+            );
+
+            Uri uri = context.getContentResolver().insert(
+                    MediaStore.Downloads.EXTERNAL_CONTENT_URI,
+                    values
+            );
+
+            if (uri != null) {
+
+                try (OutputStream outputStream =
+                             context.getContentResolver().openOutputStream(uri)) {
+
+                    if (outputStream != null) {
+                        pdfDocument.writeTo(outputStream);
+                    }
+
+                    Toast.makeText(
+                            context,
+                            "PDF saved in Downloads/Transport",
+                            Toast.LENGTH_LONG
+                    ).show();
+
+                } catch (Exception e) {
+
+                    Toast.makeText(
+                            context,
+                            "PDF save failed: " + e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+
+            } else {
+
+                Toast.makeText(
+                        context,
+                        "Unable to create PDF file",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+
             pdfDocument.close();
 
-            Toast.makeText(context, "PDF saved:\n" + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             e.printStackTrace();
