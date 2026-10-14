@@ -25,7 +25,7 @@ public class ViewDataActivity extends BaseActivity {
 
     private LinearLayout layoutData;
     private DatabaseReference databaseReference;
-    private Button btnDownloadBuy, btnDownloadSell, btnDownloadBoth, btnOpenCalculation;
+    private Button btnOpenCalculation;
     private FirebaseUser currentUser;
 
     @Override
@@ -34,9 +34,6 @@ public class ViewDataActivity extends BaseActivity {
         setContentView(R.layout.activity_view_data);
 
         layoutData = findViewById(R.id.layoutData);
-        btnDownloadBuy = findViewById(R.id.btnDownloadBuy);
-        btnDownloadSell = findViewById(R.id.btnDownloadSell);
-        btnDownloadBoth = findViewById(R.id.btnDownloadBoth);
         btnOpenCalculation = findViewById(R.id.btnOpenCalculation);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -52,18 +49,6 @@ public class ViewDataActivity extends BaseActivity {
                 .child(currentUser.getUid());
 
         fetchAndDisplayData();
-
-        btnDownloadBuy.setOnClickListener(v -> {
-            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList(), PdfGenerator.REPORT_BUY);
-        });
-
-        btnDownloadSell.setOnClickListener(v -> {
-            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList(), PdfGenerator.REPORT_SELL);
-        });
-
-        btnDownloadBoth.setOnClickListener(v -> {
-            PdfGenerator.generatePdf(ViewDataActivity.this, PdfDataHolder.getDataList(), PdfGenerator.REPORT_BOTH);
-        });
 
         btnOpenCalculation.setOnClickListener(v -> {
             Intent intent = new Intent(ViewDataActivity.this, CalculationActivity.class);
