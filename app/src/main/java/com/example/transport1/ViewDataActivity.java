@@ -82,9 +82,10 @@ public class ViewDataActivity extends BaseActivity {
                 LayoutInflater inflater = LayoutInflater.from(ViewDataActivity.this);
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    String key = ds.getKey();
+                    if (key != null && (key.equals("payments") || key.equals("factory_payments") || key.equals("cash_records"))) continue;
 
                     TransportData data = ds.getValue(TransportData.class);
-                    String key = ds.getKey();
 
                     if (data != null) {
                         addCard(data, key, inflater);

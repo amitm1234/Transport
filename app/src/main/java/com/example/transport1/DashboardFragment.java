@@ -125,6 +125,8 @@ public class DashboardFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot data : snapshot.getChildren()) {
+                    String key = data.getKey();
+                    if (key != null && (key.equals("payments") || key.equals("factory_payments") || key.equals("cash_records"))) continue;
 
                     String sellPerson = data.child("sellPerson").getValue(String.class);
                     String date = data.child("date").getValue(String.class);

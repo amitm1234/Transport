@@ -127,6 +127,8 @@ etToDate.setOnClickListener(v -> showDatePicker(etToDate));
 					int totalVehicles = 0;
 					
 					for (DataSnapshot data : snapshot.getChildren()) {
+						String key = data.getKey();
+						if (key != null && (key.equals("payments") || key.equals("factory_payments") || key.equals("cash_records"))) continue;
 						
 						String dateStr = data.child("date").getValue(String.class);
 						String weightStr = data.child("weight").getValue(String.class);

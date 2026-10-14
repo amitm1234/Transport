@@ -9,29 +9,52 @@
     android:clipToPadding="false">
 
     <!-- Header Section -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginBottom="28dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reports"
-            android:textSize="32sp"
-            android:fontFamily="sans-serif-black"
-            android:textColor="#0F172A"
-            android:letterSpacing="-0.02" />
+            android:orientation="vertical"
+            android:layout_alignParentStart="true">
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reports"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#0F172A"
+                android:letterSpacing="-0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overview of sales &amp; purchases"
+                android:textSize="14sp"
+                android:textColor="#64748B"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenCashRecords"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Overview of sales &amp; purchases"
-            android:textSize="14sp"
-            android:textColor="#64748B"
-            android:layout_marginTop="4dp" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="Cash Records"
+            android:textSize="12sp"
+            app:icon="@drawable/coin"
+            app:iconSize="16dp"
+            app:cornerRadius="12dp"
+            app:strokeColor="#EA580C"
+            android:textColor="#EA580C"
+            app:iconTint="#EA580C" />
+
+    </RelativeLayout>
 
     <!-- Sell Person Section Header -->
     <RelativeLayout

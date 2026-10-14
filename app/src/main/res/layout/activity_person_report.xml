@@ -51,6 +51,18 @@
             </LinearLayout>
 
             <!-- RIGHT SIDE (🔥 COUNT) -->
+            <ImageView
+                android:id="@+id/btnGeneratePdfHeader"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/circles_background"
+                android:backgroundTint="#EFF6FF"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_save"
+                app:tint="#3B82F6"
+                android:contentDescription="Generate PDF"
+                android:layout_marginEnd="8dp" />
+
             <TextView
                 android:id="@+id/txtTransactionCount"
                 android:layout_width="wrap_content"
@@ -267,11 +279,24 @@
                     android:layout_weight="1"
                     android:text="Add Payment"
                     android:textAllCaps="false"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:fontFamily="sans-serif-medium"
                     app:cornerRadius="27dp"
                     app:backgroundTint="#3B82F6"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_marginEnd="6dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGeneratePdf"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_weight="1"
+                    android:text="Generate PDF"
+                    android:textAllCaps="false"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium"
+                    app:cornerRadius="27dp"
+                    app:backgroundTint="#10B981"
+                    android:layout_marginEnd="6dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnPaymentHistory"
@@ -279,9 +304,9 @@
                     android:layout_width="0dp"
                     android:layout_height="54dp"
                     android:layout_weight="1"
-                    android:text="Payment History"
+                    android:text="History"
                     android:textAllCaps="false"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:fontFamily="sans-serif-medium"
                     app:cornerRadius="27dp"
                     app:strokeColor="#3B82F6"

@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class HomeFragment extends Fragment {
 
     FloatingActionButton fabAddEntry;
-    MaterialCardView cardReports, cardViewData;
+    MaterialCardView cardReports, cardViewData, cardCashRecords;
 
     public HomeFragment() {
     }
@@ -29,6 +29,7 @@ public class HomeFragment extends Fragment {
         fabAddEntry = view.findViewById(R.id.fabAddEntry);
         cardReports = view.findViewById(R.id.cardReports);
         cardViewData = view.findViewById(R.id.cardViewData);
+        cardCashRecords = view.findViewById(R.id.cardCashRecords);
 
         fabAddEntry.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddEntryActivity.class);
@@ -44,6 +45,13 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ViewDataActivity.class);
             startActivity(intent);
         });
+
+        if (cardCashRecords != null) {
+            cardCashRecords.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), CashRecordsActivity.class);
+                startActivity(intent);
+            });
+        }
 
         return view;
     }

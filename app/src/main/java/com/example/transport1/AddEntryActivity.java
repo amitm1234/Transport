@@ -329,6 +329,8 @@ public class AddEntryActivity extends AppCompatActivity {
             @Override public void onDataChange(@NonNull DataSnapshot snapshot){
                 vehicleList.clear(); factoryList.clear(); personList.clear();
                 for(DataSnapshot data:snapshot.getChildren()){
+                    String key = data.getKey();
+                    if (key != null && (key.equals("payments") || key.equals("factory_payments") || key.equals("cash_records"))) continue;
                     TransportData t = data.getValue(TransportData.class);
                     if(t==null) continue;
                     if(t.vehicle!=null && !vehicleList.contains(t.vehicle)) vehicleList.add(t.vehicle);

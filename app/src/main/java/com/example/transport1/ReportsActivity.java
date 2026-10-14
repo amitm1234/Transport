@@ -50,6 +50,14 @@ public class ReportsActivity extends AppCompatActivity {
         txtGrandTotalSellRemaining = findViewById(R.id.txtGrandTotalSellRemaining);
         txtGrandTotalFactoryRemaining = findViewById(R.id.txtGrandTotalFactoryRemaining);
 
+        View btnOpenCashRecords = findViewById(R.id.btnOpenCashRecords);
+        if (btnOpenCashRecords != null) {
+            btnOpenCashRecords.setOnClickListener(v -> {
+                Intent intent = new Intent(ReportsActivity.this, CashRecordsActivity.class);
+                startActivity(intent);
+            });
+        }
+
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference("transport_data")
@@ -86,7 +94,7 @@ public class ReportsActivity extends AppCompatActivity {
                 // 1. Calculate Sell Totals and Factory Buy Totals from main records
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String key = data.getKey();
-                    if (key != null && (key.equals("payments") || key.equals("factory_payments"))) continue;
+                    if (key != null && (key.equals("payments") || key.equals("factory_payments") || key.equals("cash_records"))) continue;
 
                     String person = data.child("sellPerson").getValue(String.class);
                     String factory = data.child("factory").getValue(String.class);

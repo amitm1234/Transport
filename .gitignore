@@ -14,3 +14,20 @@
 .cxx
 local.properties
 app/google-services.json
+
+# Android Studio
+.idea/
+
+# Gradle build files
+.gradle/
+build/
+app/build/
+
+# Local configuration
+local.properties
+
+# Compiled files
+*.class
+
+# Logs
+*.log

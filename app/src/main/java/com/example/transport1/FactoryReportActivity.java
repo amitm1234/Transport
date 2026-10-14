@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,11 +41,15 @@ public class FactoryReportActivity extends AppCompatActivity {
     ListView listFactoryRecords;
 
     Button btnAddAdvance,
-            btnViewPaymentHistory;
+            btnViewPaymentHistory,
+            btnGeneratePdf;
 
-    ImageView btnBack;
+    ImageView btnBack, btnGeneratePdfHeader;
 
     ArrayList<FactoryTransactionModel> recordList =
+            new ArrayList<>();
+
+    List<TransportData> factoryTransportList =
             new ArrayList<>();
 
     FactoryTransactionAdapter adapter;
@@ -96,6 +101,12 @@ public class FactoryReportActivity extends AppCompatActivity {
 
         btnViewPaymentHistory =
                 findViewById(R.id.btnViewPaymentHistory);
+
+        btnGeneratePdf =
+                findViewById(R.id.btnGeneratePdf);
+
+        btnGeneratePdfHeader =
+                findViewById(R.id.btnGeneratePdfHeader);
 
         btnBack =
                 findViewById(R.id.btnBack);
@@ -204,6 +215,37 @@ public class FactoryReportActivity extends AppCompatActivity {
 
             startActivity(intent);
         });
+
+
+        // ------------------------------------------------
+        // Generate PDF
+        // ------------------------------------------------
+
+        View.OnClickListener generatePdfListener = v -> {
+            if (factoryTransportList == null || factoryTransportList.isEmpty()) {
+                Toast.makeText(FactoryReportActivity.this, "No transaction data", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            double remaining = totalAdvance - totalUsedAmount;
+
+            PdfGenerator.generateFactoryPdf(
+                    FactoryReportActivity.this,
+                    factoryName,
+                    factoryTransportList,
+                    totalAdvance,
+                    totalUsedAmount,
+                    remaining
+            );
+        };
+
+        if (btnGeneratePdf != null) {
+            btnGeneratePdf.setOnClickListener(generatePdfListener);
+        }
+
+        if (btnGeneratePdfHeader != null) {
+            btnGeneratePdfHeader.setOnClickListener(generatePdfListener);
+        }
 
 
         // ------------------------------------------------
@@ -351,6 +393,7 @@ public class FactoryReportActivity extends AppCompatActivity {
 
 
                         recordList.clear();
+                        factoryTransportList.clear();
 
                         totalUsedAmount = 0;
 
@@ -378,7 +421,8 @@ public class FactoryReportActivity extends AppCompatActivity {
                             // --------------------------------------------
 
                             if ("payments".equals(data.getKey()) ||
-                                    "factory_payments".equals(data.getKey())) {
+                                    "factory_payments".equals(data.getKey()) ||
+                                    "cash_records".equals(data.getKey())) {
 
                                 continue;
                             }
@@ -410,6 +454,11 @@ public class FactoryReportActivity extends AppCompatActivity {
 
                             if (!validFactory) {
                                 continue;
+                            }
+
+                            TransportData tData = data.getValue(TransportData.class);
+                            if (tData != null) {
+                                factoryTransportList.add(tData);
                             }
 
 
