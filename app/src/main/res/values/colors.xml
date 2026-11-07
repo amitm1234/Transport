@@ -8,6 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#1976D2</color>
+    <color name="splash_background">#1E3A5F</color>
+
+    <!-- Journey Splash Theme Colors -->
+    <color name="journey_bg">#F7F5F0</color>
+    <color name="journey_primary">#0F5C4D</color>
+    <color name="journey_accent">#FFC933</color>
+    <color name="journey_text">#1E2A28</color>
+    <color name="journey_subtext">#9E9E9E</color>
 
     <color name="textPrimary">#222222</color>
     <color name="textSecondary">#777777</color>
